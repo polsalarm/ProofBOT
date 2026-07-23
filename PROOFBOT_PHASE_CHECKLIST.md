@@ -53,17 +53,17 @@ Status: **In progress**
 ### Repository baseline
 
 - [x] Git repository initialized on `main`.
-- [ ] Review the full uncommitted file set.
-- [ ] Confirm no `.env`, private key, seed phrase, RPC credential, or generated secret is staged.
-- [ ] Create the initial reviewed commit.
-- [ ] Add the intended Git remote.
-- [ ] Push `main` or the reviewed working branch.
+- [x] Review the full uncommitted file set.
+- [x] Confirm no `.env`, private key, seed phrase, RPC credential, or generated secret is staged.
+- [x] Create the initial reviewed commit.
+- [x] Add the intended Git remote.
+- [x] Push `main` or the reviewed working branch.
 - [ ] Confirm the repository's security/private-reporting settings.
-- [ ] Record the commit hash below.
+- [x] Record the commit hash below.
 
-Commit: `______________________________`
+Commit: `8c614d8`
 
-Remote/repository: `______________________________`
+Remote/repository: `https://github.com/polsalarm/ProofBOT`
 
 ### Automated local acceptance
 
