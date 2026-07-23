@@ -36,6 +36,11 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Local-only planning/status docs (not published to the repo)
+/PROJECT_HANDOFF_AND_MANUAL_TESTING.md
+/PROOFBOT_BUILD_SPEC.md
+/PROOFBOT_PHASE_CHECKLIST.md
+
 # Editors and operating systems
 .DS_Store
 Thumbs.db
