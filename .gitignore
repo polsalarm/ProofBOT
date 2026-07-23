@@ -1,0 +1,45 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Environment files and secrets (examples remain tracked)
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Next.js and frontend output
+.next/
+out/
+.vercel/
+
+# Contract build output
+packages/contracts/artifacts/
+packages/contracts/cache/
+packages/contracts/typechain-types/
+
+# General build, test, and tool output
+dist/
+build/
+coverage/
+packages/contracts/coverage.json
+*.tsbuildinfo
+.turbo/
+.code-review-graph/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

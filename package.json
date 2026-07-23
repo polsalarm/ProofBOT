@@ -1,0 +1,35 @@
+{
+  "name": "proofbot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first AI asset provenance and timestamping on BOT Chain.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter ./apps/web dev",
+    "lint": "pnpm --filter ./apps/web lint",
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm --filter ./packages/contracts typecheck && pnpm --filter ./apps/web typecheck",
+    "test": "pnpm test:config && pnpm contracts:test && pnpm web:test",
+    "build": "pnpm contracts:compile && pnpm abi:export && pnpm --filter ./apps/web build",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "contracts:compile": "pnpm --filter ./packages/contracts compile",
+    "contracts:test": "pnpm --filter ./packages/contracts test",
+    "contracts:coverage": "pnpm --filter ./packages/contracts coverage",
+    "contracts:deploy:testnet": "pnpm --filter ./packages/contracts deploy:testnet",
+    "contracts:deploy:mainnet": "pnpm --filter ./packages/contracts deploy:mainnet",
+    "abi:export": "pnpm --filter ./packages/contracts export:abi",
+    "web:test": "pnpm --filter ./apps/web test",
+    "test:config": "tsx --test scripts/validate-deployment-config.test.ts",
+    "validate:deployment": "tsx scripts/validate-deployment-config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
