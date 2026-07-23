@@ -113,32 +113,32 @@ Approved by/date: `______________________________`
 
 ## Phase 1 — Frontend testnet profile
 
-Status: **Not started**
+Status: **In progress**
 
-Current blocker: the deployment scripts support BOT Chain testnet `968`, but the frontend environment schema and chain definition currently enforce mainnet `677`.
+Implementation complete and merged to `main`. Remaining before exit: a second-person review and the manual MetaMask wallet checklist below.
 
 ### Required inputs
 
 - Official BOT Chain testnet values rechecked on the implementation date.
-- Reviewed choice: build-time environment profile, explicit UI selector, or separate testnet build.
+- Reviewed choice: build-time environment profile, explicit UI selector, or separate testnet build. **Decided: build-time environment profile** (`NEXT_PUBLIC_BOTCHAIN_NETWORK`), matching the existing per-network deploy-script pattern.
 - Developer and reviewer.
 
 ### Implementation checklist
 
-- [ ] Define a typed network profile for BOT Chain testnet `968` and mainnet `677`.
-- [ ] Reject every unsupported chain ID rather than silently falling back.
-- [ ] Make RPC, explorer, chain name, chain ID, currency, and `testnet` flag derive from the selected profile.
-- [ ] Remove hardcoded `677` labels from wallet/registration UI.
-- [ ] Make wallet add/switch requests use the selected profile.
-- [ ] Make explorer transaction/address links use the selected profile.
-- [ ] Preserve strict production validation for contract address and deployment block.
-- [ ] Make the active network unmistakable in development/testnet UI.
-- [ ] Update `.env.example` with safe testnet/mainnet examples and warnings.
-- [ ] Add tests for both supported network profiles.
-- [ ] Add tests that reject unsupported or mismatched chain IDs.
-- [ ] Add wallet switch/add tests for testnet `968` and mainnet `677`.
-- [ ] Confirm no private RPC token is accidentally exposed in a public environment value.
-- [ ] Run lint, type checks, all tests, contract compile, ABI export, and production builds for the intended profiles.
+- [x] Define a typed network profile for BOT Chain testnet `968` and mainnet `677`.
+- [x] Reject every unsupported chain ID rather than silently falling back.
+- [x] Make RPC, explorer, chain name, chain ID, currency, and `testnet` flag derive from the selected profile.
+- [x] Remove hardcoded `677` labels from wallet/registration UI.
+- [x] Make wallet add/switch requests use the selected profile.
+- [x] Make explorer transaction/address links use the selected profile.
+- [x] Preserve strict production validation for contract address and deployment block.
+- [x] Make the active network unmistakable in development/testnet UI.
+- [x] Update `.env.example` with safe testnet/mainnet examples and warnings.
+- [x] Add tests for both supported network profiles.
+- [x] Add tests that reject unsupported or mismatched chain IDs.
+- [x] Add wallet switch/add tests for testnet `968` and mainnet `677`.
+- [x] Confirm no private RPC token is accidentally exposed in a public environment value.
+- [x] Run lint, type checks, all tests, contract compile, ABI export, and production builds for the intended profiles.
 - [ ] Have a second person review the network-selection changes.
 
 ### Manual wallet checklist
@@ -153,13 +153,13 @@ Current blocker: the deployment scripts support BOT Chain testnet `968`, but the
 
 ### Phase 1 exit criteria
 
-- [ ] Testnet and mainnet profiles are explicit and covered by tests.
-- [ ] Unsupported networks fail safely.
+- [x] Testnet and mainnet profiles are explicit and covered by tests.
+- [x] Unsupported networks fail safely.
 - [ ] MetaMask add/switch behavior is manually verified on testnet.
-- [ ] Complete automated suite passes.
-- [ ] Reviewed commit and CI evidence are recorded.
+- [x] Complete automated suite passes.
+- [x] Reviewed commit and CI evidence are recorded.
 
-Commit/CI evidence: `______________________________`
+Commit/CI evidence: `37cf7ca` (network profile implementation), `60945de` (unrelated fixup) — CI runs [30037791234](https://github.com/polsalarm/ProofBOT/actions/runs/30037791234) and [30037965597](https://github.com/polsalarm/ProofBOT/actions/runs/30037965597), both green.
 
 Approved by/date: `______________________________`
 
