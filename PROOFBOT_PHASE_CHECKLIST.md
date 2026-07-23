@@ -78,7 +78,7 @@ Remote/repository: `https://github.com/polsalarm/ProofBOT`
 - [x] Solidity coverage is 100% for statements, branches, functions, and lines.
 - [x] ABI export runs and rewrites the generated artifact.
 - [x] Next.js production build completes with non-published build-validation values.
-- [ ] Push the exact accepted commit and confirm GitHub Actions passes without deployment secrets.
+- [x] Push the exact accepted commit and confirm GitHub Actions passes without deployment secrets.
 
 ### Owner-run manual acceptance
 
@@ -103,8 +103,8 @@ Evidence: `______________________________`
 
 ### Phase 0 exit criteria
 
-- [ ] Initial commit and remote exist.
-- [ ] Hosted CI passes on the recorded commit.
+- [x] Initial commit and remote exist.
+- [x] Hosted CI passes on the recorded commit.
 - [ ] Owner-run local manual checklist passes.
 - [ ] No unresolved blocker or exposed secret exists.
 - [ ] Phase 0 approval is recorded.
