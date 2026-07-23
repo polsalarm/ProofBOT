@@ -1,6 +1,13 @@
-# ProofBOT
+# 🔗 ProofBOT
 
 **Hash it. Stamp it. Verify it.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-informational)](LICENSE)
+[![Node](https://img.shields.io/badge/Node-24.14.1-339933?logo=node.js&logoColor=white)](.nvmrc)
+[![pnpm](https://img.shields.io/badge/pnpm-10.33.2-F69220?logo=pnpm&logoColor=white)](pnpm-workspace.yaml)
+[![Next.js](https://img.shields.io/badge/Next.js-App%20Router-000000?logo=next.js&logoColor=white)](apps/web)
+[![Solidity](https://img.shields.io/badge/Solidity-Hardhat-363636?logo=solidity&logoColor=white)](packages/contracts)
+[![Chain](https://img.shields.io/badge/BOT%20Chain-677%20%2F%20968-6C4CE0)](#verified-bot-chain-configuration)
 
 ProofBOT is a lightweight provenance and timestamping application for AI assets on BOT Chain. It hashes prompts, datasets, model cards, agent outputs, and other digital assets locally in the browser, then registers only the resulting Keccak-256 hash and an optional public metadata URI. Anyone who has the original content and creator wallet can independently check the on-chain timestamp.
 
@@ -8,7 +15,24 @@ ProofBOT is a lightweight provenance and timestamping application for AI assets 
 
 ProofBOT records that a wallet registered a cryptographic hash at a BOT Chain timestamp. This record does **not** by itself establish legal authorship, copyright ownership, originality, identity, or exclusive rights.
 
-For the current deployment status, wallet requirements, and step-by-step local testing, read [PROJECT_HANDOFF_AND_MANUAL_TESTING.md](PROJECT_HANDOFF_AND_MANUAL_TESTING.md). Track the testnet/mainnet rollout in the standalone [PROOFBOT_PHASE_CHECKLIST.md](PROOFBOT_PHASE_CHECKLIST.md).
+## 🧩 Problem
+
+AI-assisted work (prompts, datasets, model cards, agent outputs) is trivial to copy and hard to date. Once a file leaves your machine there is usually no independent, low-trust way to show *what* you had and *when* you had it:
+
+- Screenshots and file timestamps are easy to fake or silently altered by the OS/filesystem.
+- Centralized "proof of creation" services require you to upload the actual content to a third party, and their database is a single point of trust and failure.
+- Existing notarization tools are often paid, closed, or coupled to a platform you don't control.
+
+None of these give a permanent, independently verifiable, tamper-evident record that anyone — not just the issuing service — can check.
+
+## 💡 Why we're building this
+
+ProofBOT exists to make that record cheap, boring, and trust-minimized:
+
+- **Non-custodial**: only a hash and wallet address go on-chain — never the original content. Nothing to leak, nothing to host.
+- **No backend to trust or maintain**: hashing happens in the browser, verification is a read-only contract call. If ProofBOT the app disappears, the on-chain record and a public RPC endpoint are still enough to verify.
+- **Cheap and simple**: BOT Chain gives low-cost transactions for a single-purpose registry contract, so timestamping stays affordable for individual creators, not just enterprises.
+- **A building block, not a platform**: the registry is intentionally minimal (hash + category + optional metadata URI) so it can be composed into other provenance or attribution tooling later, instead of locking users into one UI.
 
 ## How ProofBOT works
 
