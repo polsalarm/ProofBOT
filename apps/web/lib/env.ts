@@ -1,6 +1,8 @@
 import { getAddress, isAddress } from "viem";
 import { z } from "zod";
 
+import { NETWORK_PROFILES, isNetworkKey } from "@/lib/network-profiles";
+
 const httpUrl = z
   .string()
   .url()
@@ -9,9 +11,10 @@ const httpUrl = z
   });
 
 const publicEnvSchema = z.object({
-  NEXT_PUBLIC_BOTCHAIN_CHAIN_ID: z.coerce.number().int().refine((value) => value === 677, {
-    message: "must be BOT Chain mainnet chain ID 677",
+  NEXT_PUBLIC_BOTCHAIN_NETWORK: z.enum(["testnet", "mainnet"], {
+    errorMap: () => ({ message: 'must be "testnet" or "mainnet"' }),
   }),
+  NEXT_PUBLIC_BOTCHAIN_CHAIN_ID: z.coerce.number().int(),
   NEXT_PUBLIC_BOTCHAIN_RPC_URL: httpUrl,
   NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL: httpUrl,
   NEXT_PUBLIC_PROOFBOT_CONTRACT_ADDRESS: z
@@ -33,12 +36,17 @@ export function validatePublicEnv(
   input: Partial<Record<keyof PublicEnv, string | undefined>>,
   options: PublicEnvValidationOptions = {},
 ) {
+  const rawNetwork = input.NEXT_PUBLIC_BOTCHAIN_NETWORK ?? "mainnet";
+  const networkDefaults = isNetworkKey(rawNetwork) ? NETWORK_PROFILES[rawNetwork] : undefined;
+
   const result = publicEnvSchema.safeParse({
-    NEXT_PUBLIC_BOTCHAIN_CHAIN_ID: input.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID ?? "677",
+    NEXT_PUBLIC_BOTCHAIN_NETWORK: rawNetwork,
+    NEXT_PUBLIC_BOTCHAIN_CHAIN_ID:
+      input.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID ?? String(networkDefaults?.chainId ?? ""),
     NEXT_PUBLIC_BOTCHAIN_RPC_URL:
-      input.NEXT_PUBLIC_BOTCHAIN_RPC_URL ?? "https://rpc.botchain.ai",
+      input.NEXT_PUBLIC_BOTCHAIN_RPC_URL ?? networkDefaults?.defaultRpcUrl,
     NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL:
-      input.NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL ?? "https://scan.botchain.ai",
+      input.NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL ?? networkDefaults?.defaultExplorerUrl,
     NEXT_PUBLIC_PROOFBOT_CONTRACT_ADDRESS:
       input.NEXT_PUBLIC_PROOFBOT_CONTRACT_ADDRESS ?? "",
     NEXT_PUBLIC_PROOFBOT_DEPLOYMENT_BLOCK:
@@ -52,6 +60,13 @@ export function validatePublicEnv(
       .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
       .join("; ");
     throw new Error(`Invalid ProofBOT public environment: ${details}`);
+  }
+
+  const expectedChainId = NETWORK_PROFILES[result.data.NEXT_PUBLIC_BOTCHAIN_NETWORK].chainId;
+  if (result.data.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID !== expectedChainId) {
+    throw new Error(
+      `Invalid ProofBOT public environment: NEXT_PUBLIC_BOTCHAIN_CHAIN_ID must be ${expectedChainId} for network "${result.data.NEXT_PUBLIC_BOTCHAIN_NETWORK}", got ${result.data.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID}.`,
+    );
   }
 
   const hasContractAddress =
@@ -75,6 +90,7 @@ export function validatePublicEnv(
 }
 
 const parsed = validatePublicEnv({
+  NEXT_PUBLIC_BOTCHAIN_NETWORK: process.env.NEXT_PUBLIC_BOTCHAIN_NETWORK,
   NEXT_PUBLIC_BOTCHAIN_CHAIN_ID: process.env.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID,
   NEXT_PUBLIC_BOTCHAIN_RPC_URL: process.env.NEXT_PUBLIC_BOTCHAIN_RPC_URL,
   NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL: process.env.NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL,
@@ -89,6 +105,7 @@ const parsed = validatePublicEnv({
 });
 
 export const publicEnv = {
+  network: parsed.NEXT_PUBLIC_BOTCHAIN_NETWORK,
   chainId: parsed.NEXT_PUBLIC_BOTCHAIN_CHAIN_ID,
   rpcUrl: parsed.NEXT_PUBLIC_BOTCHAIN_RPC_URL.replace(/\/$/, ""),
   explorerUrl: parsed.NEXT_PUBLIC_BOTCHAIN_EXPLORER_URL.replace(/\/$/, ""),

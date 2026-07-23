@@ -5,6 +5,7 @@ import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 
 import { botChain } from "@/lib/chain";
 import { isUnknownChainError, toUserError } from "@/lib/errors";
+import { toHexChainId } from "@/lib/network-profiles";
 
 type RequestProvider = {
   request(args: { method: string; params?: readonly unknown[] }): Promise<unknown>;
@@ -59,7 +60,7 @@ export function useWallet() {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: "0x2a5",
+              chainId: toHexChainId(botChain.id),
               chainName: botChain.name,
               nativeCurrency: botChain.nativeCurrency,
               rpcUrls: [...botChain.rpcUrls.default.http],

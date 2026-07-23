@@ -11,6 +11,7 @@ import { useDuplicateCheck } from "@/hooks/use-duplicate-check";
 import { useProofRecord } from "@/hooks/use-proof-record";
 import { useRegisterProof } from "@/hooks/use-register-proof";
 import { useWallet } from "@/hooks/use-wallet";
+import { botChain } from "@/lib/chain";
 import { deploymentConfigured } from "@/lib/env";
 import { ASSET_TYPES, type AssetType } from "@/lib/proofs";
 import { metadataByteLength, validateMetadataURI } from "@/lib/validation";
@@ -67,7 +68,7 @@ export function RegisterPanel() {
         : registration.status === "wallet"
           ? "Confirm the transaction in your wallet."
           : registration.status === "confirming"
-            ? "Transaction submitted to BOT Chain. Waiting for its receipt…"
+            ? `Transaction submitted to ${botChain.name}. Waiting for its receipt…`
             : undefined;
 
   return (
@@ -121,7 +122,7 @@ export function RegisterPanel() {
 
         <aside className="rounded-xl border border-[var(--line)] bg-black/12 p-5 xl:self-start" aria-labelledby="confirm-heading">
           <p className="eyebrow">Final check</p>
-          <h3 className="mt-3 text-lg font-bold" id="confirm-heading">Confirm on BOT Chain</h3>
+          <h3 className="mt-3 text-lg font-bold" id="confirm-heading">Confirm on {botChain.name}</h3>
           <dl className="mt-5 grid gap-3 text-sm">
             <div className="flex items-start justify-between gap-3 border-b border-[var(--line)] pb-3">
               <dt className="text-[var(--mist-muted)]">Wallet</dt>
@@ -130,7 +131,7 @@ export function RegisterPanel() {
             <div className="flex items-start justify-between gap-3 border-b border-[var(--line)] pb-3">
               <dt className="text-[var(--mist-muted)]">Network</dt>
               <dd className={wallet.isConnected && !wallet.wrongNetwork ? "text-[var(--teal)]" : "text-[var(--warning)]"}>
-                {!wallet.isConnected ? "Connect wallet" : wallet.wrongNetwork ? `Chain ${wallet.chainId ?? "unknown"}` : "BOT Chain · 677"}
+                {!wallet.isConnected ? "Connect wallet" : wallet.wrongNetwork ? `Chain ${wallet.chainId ?? "unknown"}` : `${botChain.name} · ${botChain.id}`}
               </dd>
             </div>
             <div className="flex items-start justify-between gap-3">
@@ -149,7 +150,7 @@ export function RegisterPanel() {
           ) : wallet.wrongNetwork ? (
             <button className="btn btn-primary mt-5 w-full" type="button" onClick={wallet.switchToBotChain} disabled={wallet.action !== "idle"}>
               {wallet.action === "switching" ? <span className="spinner" aria-hidden="true" /> : "↻"}
-              Switch to BOT Chain
+              Switch to {botChain.name}
             </button>
           ) : (
             <button

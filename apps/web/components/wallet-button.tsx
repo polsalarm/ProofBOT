@@ -1,5 +1,6 @@
 "use client";
 
+import { botChain } from "@/lib/chain";
 import { explorerAddressUrl } from "@/lib/explorer";
 import { shortenHex } from "@/lib/proofs";
 import { useWallet } from "@/hooks/use-wallet";
@@ -28,7 +29,7 @@ export function WalletButton() {
       <div className="relative">
         <button className="btn btn-primary" type="button" onClick={wallet.switchToBotChain} disabled={wallet.action !== "idle"}>
           {wallet.action === "switching" ? <span className="spinner" aria-hidden="true" /> : "↻"}
-          {wallet.action === "switching" ? "Switching" : "Switch to BOT Chain"}
+          {wallet.action === "switching" ? "Switching" : `Switch to ${botChain.name}`}
         </button>
         {wallet.error ? (
           <p className="absolute top-full right-0 z-30 mt-2 w-72 rounded-lg border border-[var(--danger)]/40 bg-[var(--ink-soft)] p-3 text-xs text-[var(--danger)] shadow-xl" role="alert">

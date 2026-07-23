@@ -17,7 +17,18 @@ vi.mock("@/hooks/use-wallet", () => ({ useWallet: mocks.wallet }));
 vi.mock("@/hooks/use-duplicate-check", () => ({ useDuplicateCheck: mocks.duplicate }));
 vi.mock("@/hooks/use-register-proof", () => ({ useRegisterProof: mocks.registration }));
 vi.mock("@/hooks/use-proof-record", () => ({ useProofRecord: mocks.proof }));
-vi.mock("@/lib/env", () => ({ deploymentConfigured: true }));
+vi.mock("@/lib/env", () => ({
+  deploymentConfigured: true,
+  publicEnv: {
+    network: "mainnet",
+    chainId: 677,
+    rpcUrl: "https://rpc.botchain.ai",
+    explorerUrl: "https://scan.botchain.ai",
+    contractAddress: "0x00000000000000000000000000000000000000A1",
+    deploymentBlock: 1n,
+    logChunkSize: 5000n,
+  },
+}));
 vi.mock("@/components/proof-record-card", () => ({
   ProofRecordCard: ({ contentHash }: { contentHash: string }) => (
     <div data-testid="proof-record">Verified record {contentHash}</div>

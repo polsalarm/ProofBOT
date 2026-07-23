@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { WalletButton } from "@/components/wallet-button";
+import { botChain } from "@/lib/chain";
 
 const navigation = [
   { href: "/?tab=register", label: "Register" },
@@ -31,7 +32,17 @@ export function AppHeader() {
             </Link>
           ))}
         </nav>
-        <WalletButton />
+        <div className="flex items-center gap-3">
+          {botChain.testnet ? (
+            <span
+              className="data-text rounded-full border border-[var(--warning)]/50 bg-[var(--warning)]/10 px-2.5 py-1 text-[0.62rem] font-bold tracking-[0.1em] text-[var(--warning)] uppercase"
+              title={`Connected app network: ${botChain.name} (chain ${botChain.id})`}
+            >
+              Testnet
+            </span>
+          ) : null}
+          <WalletButton />
+        </div>
       </div>
       <nav className="page-shell flex items-center justify-between border-t border-[var(--line)] lg:hidden" aria-label="Mobile navigation">
         {navigation.map((item) => (

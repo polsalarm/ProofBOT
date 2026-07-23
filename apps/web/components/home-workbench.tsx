@@ -5,6 +5,7 @@ import { useState } from "react";
 import { HashFingerprint } from "@/components/hash-fingerprint";
 import { RegisterPanel } from "@/components/register-panel";
 import { VerifyPanel } from "@/components/verify-panel";
+import { botChain } from "@/lib/chain";
 
 type HomeTab = "register" | "verify";
 
@@ -26,7 +27,7 @@ export function HomeWorkbench({ initialTab = "register" }: { initialTab?: HomeTa
             {[
               ["Local", "Content stays here"],
               ["Keccak-256", "Exact-byte digest"],
-              ["BOT · 677", "On-chain timestamp"],
+              [`${botChain.nativeCurrency.symbol} · ${botChain.id}`, "On-chain timestamp"],
             ].map(([label, detail]) => (
               <div className="border-l border-[var(--line)] px-3 first:border-l-0 first:pl-0" key={label}>
                 <p className="data-text text-[0.65rem] font-bold tracking-[0.08em] text-[var(--teal)] uppercase sm:text-xs">{label}</p>
