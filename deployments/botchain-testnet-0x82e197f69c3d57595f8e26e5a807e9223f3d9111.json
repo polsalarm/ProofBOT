@@ -1,0 +1,13 @@
+{
+  "network": "botchain-testnet",
+  "chainId": 968,
+  "contractName": "ProofBOTRegistry",
+  "address": "0x82e197f69c3d57595f8E26E5a807E9223F3D9111",
+  "deploymentTransaction": "0x9db35ad50078c3dbfb5b68fe16943723356819f404ed3ed2649861a8807edb49",
+  "deploymentBlock": 17401932,
+  "deployer": "0xB12df7d12d9c5d2B65FB878b5fF67a5f29F59A0c",
+  "deployedAt": "2026-07-24T09:44:11.000Z",
+  "compilerVersion": "0.8.24",
+  "sourceVerified": false,
+  "gitCommit": "120b849d0ba4a2a2752c94a5b8958e3d021734d3"
+}
